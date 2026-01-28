@@ -70,6 +70,11 @@
         background: linear-gradient(to bottom, #fff, #ff4d4d);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
+        color: #ff4d4d; /* Warm Red */
+        text-shadow:
+          0 0 10px rgba(255, 77, 77, 0.8),
+          0 0 20px rgba(255, 165, 0, 0.4); /* Orange secondary glow */
+        animation: pulse-glow 2s infinite alternate;
       }
       .countdown {
         font-family: "Space Mono", monospace;
@@ -77,6 +82,17 @@
         font-size: clamp(1.2rem, 5vw, 2rem);
         color: #00f2ff; /* Cyber-blue contrast color */
         text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+      }
+
+      @keyframes pulse-glow {
+        from {
+          text-shadow: 0 0 10px rgba(255, 77, 77, 0.8);
+        }
+        to {
+          text-shadow:
+            0 0 25px rgba(255, 165, 0, 1),
+            0 0 5px #fff;
+        }
       }
 
       .label {

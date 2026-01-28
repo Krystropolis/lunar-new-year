@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&family=Space+Mono:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2026 Lunar New Year | Magnetic Experience</title>
+    <style>
+      :root {
+        --bg-dark: #0a0a0c;
+        --accent: #ff4d4d; /* Festive Red */
+        --glass: rgba(255, 255, 255, 0.05);
+        --text: #ffffff;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("solar-flare.png") no-repeat center center;
+        background-size: cover;
+        opacity: 0.6; /* Dims the image so text is readable */
+        z-index: -1; /* Puts it behind everything */
+      }
+      body {
+        background-color: var(--bg-dark);
+        /* Animated Mesh Gradient */
+        background-image: radial-gradient(
+            at 0% 0%,
+            hsla(0, 100%, 20%, 0.15) 0,
+            transparent 50%
+          ),
+          radial-gradient(
+            at 100% 100%,
+            hsla(20, 100%, 20%, 0.15) 0,
+            transparent 50%
+          );
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Helvetica, Arial, sans-serif;
+        color: var(--text);
+      }
+
+      .container {
+        text-align: center;
+        z-index: 1;
+      }
+      /* Update your existing styles with these variables */
+      h1 {
+        font-family: "Orbitron", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        font-weight: 900; /* Use the maximum weight for high contrast */
+        background: linear-gradient(to bottom, #fff, #ff4d4d);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .countdown {
+        font-family: "Space Mono", monospace;
+        font-weight: 700;
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        color: #00f2ff; /* Cyber-blue contrast color */
+        text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
+      }
+
+      .label {
+        font-family: "Space Mono", monospace;
+        letter-spacing: 4px;
+        opacity: 0.8;
+      }
+
+      /* Magnetic Interaction Area */
+      .magnetic-wrap {
+        display: inline-block;
+        padding: 80px; /* Magnetic field strength area */
+        cursor: pointer;
+      }
+
+      .magnetic-button {
+        position: relative;
+        padding: 40px 60px;
+        background: var(--glass);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 24px;
+        transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      /* Accessibility: Stop motion for users with vestibular issues */
+      @media (prefers-reduced-motion: reduce) {
+        .magnetic-button {
+          transform: none !important;
+        }
+      }
+
+      .footer-link {
+        position: fixed;
+        bottom: 30px;
+        color: rgba(255, 255, 255, 0.4);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+      }
+      .footer-link:hover {
+        color: var(--accent);
+      }
+      .cultural-footer {
+        margin-top: 20px;
+        padding-top: 15px;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .chinese-chars {
+        display: block;
+        font-size: 1.8rem;
+        color: var(--accent);
+        /* High contrast is key for character legibility */
+        text-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+        margin-bottom: 5px;
+      }
+
+      .translation {
+        font-family: "Space Mono", monospace;
+        font-size: 0.7rem;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.6);
+        letter-spacing: 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Fire Horse 2026</h1>
+      <div class="magnetic-wrap" id="wrap">
+        <div class="magnetic-button" id="btn">
+          <span class="label">Time until Lunar New Year</span>
+          <div class="countdown" id="timer">00d 00h 00m 00s</div>
+
+          <div class="cultural-footer">
+            <span class="chinese-chars">马到成功</span>
+            <p class="translation">"Instant success upon arrival"</p>
+          </div>
+        </div>
+        <!-- <div class="magnetic-button" id="btn">
+
+          <span class="label">Time until Lunar New Year</span>
+          <div class="countdown" id="timer">00d 00h 00m 00s</div>
+        </div> -->
+      </div>
+    </div>
+
+    <a href="https://krystropolis.github.io/portfolio/" class="footer-link"
+      >← Return to Portfolio</a
+    >
+
+    <script>
+      const btn = document.getElementById("btn");
+      const wrap = document.getElementById("wrap");
+      const timerDisplay = document.getElementById("timer");
+
+      // MAGNETIC EFFECT
+      wrap.addEventListener("mousemove", (e) => {
+        const rect = btn.getBoundingClientRect();
+        // Calculate distance from center of button
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        // Shift the button 35% towards the cursor
+        btn.style.transform = `translate(${x * 0.35}px, ${y * 0.35}px)`;
+      });
+
+      wrap.addEventListener("mouseleave", () => {
+        // Spring back to center
+        btn.style.transform = `translate(0, 0)`;
+      });
+
+      // COUNTDOWN LOGIC
+      const target = new Date("February 17, 2026 00:00:00").getTime();
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const gap = target - now;
+
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const d = Math.floor(gap / day);
+        const h = Math.floor((gap % day) / hour);
+        const m = Math.floor((gap % hour) / minute);
+        const s = Math.floor((gap % minute) / second);
+
+        // Pad with leading zeros
+        timerDisplay.innerText = `${d}d ${String(h).padStart(2, "0")}h ${String(m).padStart(2, "0")}m ${String(s).padStart(2, "0")}s`;
+      }
+
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial call
+
+      const culturalInsights = [
+        { zh: "马到成功", en: "Success as soon as the horse arrives" },
+        { zh: "龙马精神", en: "The spirit of a dragon and horse (Vigor)" },
+        { zh: "万象更新", en: "All things take on a completely new aspect" },
+        { zh: "心想事成", en: "May all your wishes come true" },
+      ];
+
+      // Pick a phrase based on the current date
+      const dayOfYear = Math.floor(
+        (new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000,
+      );
+      const todayPhrase = culturalInsights[dayOfYear % culturalInsights.length];
+
+      document.querySelector(".chinese-chars").innerText = todayPhrase.zh;
+      document.querySelector(".translation").innerText = `"${todayPhrase.en}"`;
+    </script>
+  </body>
+</html>

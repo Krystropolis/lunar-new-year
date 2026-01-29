@@ -16,6 +16,7 @@
         --accent: #ff4d4d; /* Festive Red */
         --glass: rgba(255, 255, 255, 0.05);
         --text: #ffffff;
+        --contrast: #00f2ff; /* Bright Blue */
       }
 
       * {
@@ -62,6 +63,7 @@
         text-align: center;
         z-index: 1;
       }
+
       h1 {
         font-family: "Orbitron", sans-serif;
         text-transform: uppercase;
@@ -76,11 +78,12 @@
           0 0 20px rgba(255, 165, 0, 0.4); /* Orange secondary glow */
         animation: pulse-glow 2s infinite alternate;
       }
+
       .countdown {
         font-family: "Space Mono", monospace;
         font-weight: 700;
         font-size: clamp(1.2rem, 5vw, 2rem);
-        color: #00f2ff; /* Cyber-blue contrast color */
+        color: var(--contrast);
         text-shadow: 0 0 10px rgba(0, 242, 255, 0.5);
       }
 
@@ -137,9 +140,20 @@
         font-size: 0.9rem;
         transition: color 0.3s;
       }
-      .footer-link:hover {
+
+      a:hover {
         color: var(--accent);
       }
+
+      .resource {
+        font-family: "Space Mono", monospace;
+      }
+
+      .resource-link {
+        color: rgba(255, 165, 0, 1);
+        transition: color 0.3s;
+      }
+      
       .cultural-footer {
         margin-top: 20px;
         padding-top: 15px;
@@ -177,7 +191,12 @@
           </div>
         </div>
       </div>
+      <div class="resource">
+        <a href="https://chinesenewyear.net/" class="resource-link">Learn more</a> about the Lunar New Year, which will begin on February 17, 2026
+      </div> 
     </div>
+
+
 
     <a href="https://krystropolis.github.io/portfolio/" class="footer-link"
       >← Return to Portfolio</a

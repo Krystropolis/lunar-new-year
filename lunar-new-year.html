@@ -69,6 +69,7 @@
         text-transform: uppercase;
         letter-spacing: 0.1em;
         font-weight: 900; /* Use the maximum weight for high contrast */
+        font-size: clamp(1.5rem, 6vw, 3rem);
         background: linear-gradient(to bottom, #fff, #ff4d4d);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -175,6 +176,40 @@
         color: rgba(255, 255, 255, 0.6);
         letter-spacing: 1px;
       }
+
+      /* Mobile Responsiveness */
+      @media (max-width: 768px) {
+        .container {
+          width: 90%;
+          max-width: 400px;
+          padding: 0 15px;
+        }
+
+        .magnetic-wrap {
+          padding: 30px;
+        }
+
+        .magnetic-button {
+          padding: 25px 30px;
+        }
+
+        .footer-link {
+          bottom: 15px;
+          font-size: 0.8rem;
+        }
+
+        .resource {
+          font-size: 0.85rem;
+        }
+
+        .chinese-chars {
+          font-size: 1.4rem;
+        }
+
+        .translation {
+          font-size: 0.65rem;
+        }
+      }
     </style>
   </head>
   <body>
@@ -219,6 +254,22 @@
       });
 
       wrap.addEventListener("mouseleave", () => {
+        // Spring back to center
+        btn.style.transform = `translate(0, 0)`;
+      });
+
+      // Touch support for mobile devices
+      wrap.addEventListener("touchstart", (e) => {
+        const rect = btn.getBoundingClientRect();
+        const touch = e.touches[0];
+        const x = touch.clientX - rect.left - rect.width / 2;
+        const y = touch.clientY - rect.top - rect.height / 2;
+
+        // Shift the button 25% towards the touch point (reduced for mobile)
+        btn.style.transform = `translate(${x * 0.25}px, ${y * 0.25}px)`;
+      });
+
+      wrap.addEventListener("touchend", () => {
         // Spring back to center
         btn.style.transform = `translate(0, 0)`;
       });
